@@ -1,15 +1,19 @@
 ---
-title: "Final Project Basic Outline"
-author: "Student name"
+title: "Final Project"
+author: "Nandagopal Panicker"
 output: html_notebook
 ---
 
-This is an outline for your final project. You can follow this outline, or you can modify it as you see fit. Do what works best for your project. 
 
-## Research Question 
+## Research Objective 
 
-State your general specific question and why it is interesting. 
+The aim of this project is to successfully compare two datasets to derive valuable insights from both of them. I have a couple of objectives in mind with regards to spotting trends:
 
+* I want to find the top 5 artists in 2023 and 2024 respectively and make a vizualization revolving around the same.
+
+* Since this is not a key feature in the 2024 dataset, I want to see if the bpm of a song has a correlation of sorts to how popular it is on the most popular streaming platform(Spotify).
+
+* In addition to this, I want to compare the streams for songs over Spotify, Deezer, and Apple Music and see if the music in 2024 is more popular than the music in 2023.
 
 
 ## Data Processing 

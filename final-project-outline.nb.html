@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Names of all group members" />
+<meta name="author" content="Nandagopal Panicker" />
 
 
-<title>Final Project Basic Outline</title>
+<title>Final Project</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1512,7 +1512,7 @@ window.initializeCodeFolding = function(show) {
     $(this).detach().appendTo(div);
 
     // add a show code button right above
-    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Code') + '</span>');
+    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
     var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
     showCodeButton.append(showCodeText);
     showCodeButton
@@ -1538,7 +1538,7 @@ window.initializeCodeFolding = function(show) {
     //   * Change text
     //   * add a class for intermediate states styling
     div.on('hide.bs.collapse', function () {
-      showCodeText.text('Code');
+      showCodeText.text('Show');
       showCodeButton.addClass('btn-collapsing');
     });
     div.on('hidden.bs.collapse', function () {
@@ -1747,25 +1747,34 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Final Project Basic Outline</h1>
-<h4 class="author">Names of all group members</h4>
+<h1 class="title toc-ignore">Final Project</h1>
+<h4 class="author">Nandagopal Panicker</h4>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<p>This is an outline for your final project. You can follow this
-outline, or you can modify it as you see fit. Do what works best for
-your project.</p>
-<div id="research-question" class="section level2">
-<h2>Research Question</h2>
-<p>State your general specific question and why it is interesting.</p>
+<div id="research-objective" class="section level2">
+<h2>Research Objective</h2>
+<p>The aim of this project is to successfully compare two datasets to
+derive valuable insights from both of them. I have a couple of
+objectives in mind with regards to spotting trends:</p>
+<ul>
+<li><p>I want to find the top 5 artists in 2023 and 2024 respectively
+and make a vizualization revolving around the same.</p></li>
+<li><p>Since this is not a key feature in the 2024 dataset, I want to
+see if the bpm of a song has a correlation of sorts to how popular it is
+on the most popular streaming platform(Spotify).</p></li>
+<li><p>In addition to this, I want to compare the streams for songs over
+Spotify, Deezer, and Apple Music and see if the music in 2024 is more
+popular than the music in 2023.</p></li>
+</ul>
 </div>
 <div id="data-processing" class="section level2">
 <h2>Data Processing</h2>
 <div id="data-intake" class="section level4">
 <h4>Data Intake</h4>
-<p>Include R code and written explanation to import your
+<p>Include R code and a written explanation to import your
 <strong>TWO</strong> data sets.</p>
 </div>
 <div id="data-wrangling" class="section level4">
@@ -1788,7 +1797,7 @@ you created.</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYWwgUHJvamVjdCBCYXNpYyBPdXRsaW5lIgphdXRob3I6ICJOYW1lcyBvZiBhbGwgZ3JvdXAgbWVtYmVycyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBvdXRsaW5lIGZvciB5b3VyIGZpbmFsIHByb2plY3QuIFlvdSBjYW4gZm9sbG93IHRoaXMgb3V0bGluZSwgb3IgeW91IGNhbiBtb2RpZnkgaXQgYXMgeW91IHNlZSBmaXQuIERvIHdoYXQgd29ya3MgYmVzdCBmb3IgeW91ciBwcm9qZWN0LiAKCiMjIFJlc2VhcmNoIFF1ZXN0aW9uIAoKU3RhdGUgeW91ciBnZW5lcmFsIHNwZWNpZmljIHF1ZXN0aW9uIGFuZCB3aHkgaXQgaXMgaW50ZXJlc3RpbmcuIAoKCgojIyBEYXRhIFByb2Nlc3NpbmcgCgojIyMjIERhdGEgSW50YWtlIAoKSW5jbHVkZSBSIGNvZGUgYW5kIHdyaXR0ZW4gZXhwbGFuYXRpb24gdG8gaW1wb3J0IHlvdXIgKipUV08qKiBkYXRhIHNldHMuCgojIyMjIERhdGEgV3JhbmdsaW5nIAoKSW5jbHVkZSBSIGNvZGUgYW5kIHdyaXR0ZW4gZXhwbGFuYXRpb24gZm9yIHdhbmdsaW5nIHlvdXIgZGF0YSAoeW91IGNhbiBtYWtlIG11bHRpcGxlIHdyYW5nbGVkIGRhdGEgc2V0cykuIAoKCgoKIyMgRGF0YSBWaXN1YWxpemF0aW9uCgpJbmNsdWRlIFIgY29kZSBhbmQgd3JpdHRlbiBleHBsYW5hdGlvbiBmb3IgeW91ciBkYXRhIHZpc3VhbGl6YXRpb24ocykgd2l0aCBhdCBsZWFzdCAzIHZhcmlhYmxlcy4gWW91IG11c3QgaGF2ZSAqKmF0IGxlYXN0Kiogb25lIGdyYXBoLiBZb3UgbWF5IGhhdmUgbW9yZSB0aGFuIG9uZSAoSSB3b3VsZCBlbmNvdXJhZ2UgeW91IHRvIGhhdmUgbW9yZSB0aGFuIG9uZSkuIAoKCgoKIyMgQ29uY2x1c2lvbgoKQW5zd2VyIHlvdXIgcmVzZWFyY2ggcXVlc3Rpb24gdXNpbmcgdGhlIGRhdGEgc2V0cyBhbmQgdmlzdWFsaXphdGlvbnMgeW91IGNyZWF0ZWQuIA==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZpbmFsIFByb2plY3QiDQphdXRob3I6ICJOYW5kYWdvcGFsIFBhbmlja2VyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQojIyBSZXNlYXJjaCBPYmplY3RpdmUgDQoNClRoZSBhaW0gb2YgdGhpcyBwcm9qZWN0IGlzIHRvIHN1Y2Nlc3NmdWxseSBjb21wYXJlIHR3byBkYXRhc2V0cyB0byBkZXJpdmUgdmFsdWFibGUgaW5zaWdodHMgZnJvbSBib3RoIG9mIHRoZW0uIEkgaGF2ZSBhIGNvdXBsZSBvZiBvYmplY3RpdmVzIGluIG1pbmQgd2l0aCByZWdhcmRzIHRvIHNwb3R0aW5nIHRyZW5kczoNCg0KKiBJIHdhbnQgdG8gZmluZCB0aGUgdG9wIDUgYXJ0aXN0cyBpbiAyMDIzIGFuZCAyMDI0IHJlc3BlY3RpdmVseSBhbmQgbWFrZSBhIHZpenVhbGl6YXRpb24gcmV2b2x2aW5nIGFyb3VuZCB0aGUgc2FtZS4NCg0KKiBTaW5jZSB0aGlzIGlzIG5vdCBhIGtleSBmZWF0dXJlIGluIHRoZSAyMDI0IGRhdGFzZXQsIEkgd2FudCB0byBzZWUgaWYgdGhlIGJwbSBvZiBhIHNvbmcgaGFzIGEgY29ycmVsYXRpb24gb2Ygc29ydHMgdG8gaG93IHBvcHVsYXIgaXQgaXMgb24gdGhlIG1vc3QgcG9wdWxhciBzdHJlYW1pbmcgcGxhdGZvcm0oU3BvdGlmeSkuDQoNCiogSW4gYWRkaXRpb24gdG8gdGhpcywgSSB3YW50IHRvIGNvbXBhcmUgdGhlIHN0cmVhbXMgZm9yIHNvbmdzIG92ZXIgU3BvdGlmeSwgRGVlemVyLCBhbmQgQXBwbGUgTXVzaWMgYW5kIHNlZSBpZiB0aGUgbXVzaWMgaW4gMjAyNCBpcyBtb3JlIHBvcHVsYXIgdGhhbiB0aGUgbXVzaWMgaW4gMjAyMy4NCg0KDQojIyBEYXRhIFByb2Nlc3NpbmcgDQoNCiMjIyMgRGF0YSBJbnRha2UgDQoNCkluY2x1ZGUgUiBjb2RlIGFuZCBhIHdyaXR0ZW4gZXhwbGFuYXRpb24gdG8gaW1wb3J0IHlvdXIgKipUV08qKiBkYXRhIHNldHMuDQoNCiMjIyMgRGF0YSBXcmFuZ2xpbmcgDQoNCkluY2x1ZGUgUiBjb2RlIGFuZCB3cml0dGVuIGV4cGxhbmF0aW9uIGZvciB3YW5nbGluZyB5b3VyIGRhdGEgKHlvdSBjYW4gbWFrZSBtdWx0aXBsZSB3cmFuZ2xlZCBkYXRhIHNldHMpLiANCg0KDQoNCg0KIyMgRGF0YSBWaXN1YWxpemF0aW9uDQoNCkluY2x1ZGUgUiBjb2RlIGFuZCB3cml0dGVuIGV4cGxhbmF0aW9uIGZvciB5b3VyIGRhdGEgdmlzdWFsaXphdGlvbihzKSB3aXRoIGF0IGxlYXN0IDMgdmFyaWFibGVzLiBZb3UgbXVzdCBoYXZlICoqYXQgbGVhc3QqKiBvbmUgZ3JhcGguIFlvdSBtYXkgaGF2ZSBtb3JlIHRoYW4gb25lIChJIHdvdWxkIGVuY291cmFnZSB5b3UgdG8gaGF2ZSBtb3JlIHRoYW4gb25lKS4gDQoNCg0KDQoNCiMjIENvbmNsdXNpb24NCg0KQW5zd2VyIHlvdXIgcmVzZWFyY2ggcXVlc3Rpb24gdXNpbmcgdGhlIGRhdGEgc2V0cyBhbmQgdmlzdWFsaXphdGlvbnMgeW91IGNyZWF0ZWQuIA0K</div>
 
 
 
