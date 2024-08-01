@@ -9,7 +9,7 @@ output: html_notebook
 
 The aim of this project is to successfully compare two datasets to derive valuable insights from both of them. I have a couple of objectives in mind with regards to spotting trends:
 
-* I want to find the top 5 artists in 2023 and 2024 respectively and make a vizualization revolving around the same.
+* I want to find the top 5 songs appearing the most in playlists in 2023 and 2024 and make a vizualization revolving around the same.
 
 * Since this is not a key feature in the 2024 dataset, I want to see if the bpm of a song has a correlation of sorts to how popular it is on the most popular streaming platform(Spotify).
 
@@ -20,11 +20,116 @@ The aim of this project is to successfully compare two datasets to derive valuab
 
 #### Data Intake 
 
-Include R code and a written explanation to import your **TWO** data sets.
+A couple of things are important to note with regards to these data-sets. The 2023 spotify dataset has a lot less data than the 2024 one.
+
+Both these datasets have been provided by the Spotify API. For the sake of visualization and data preprocessing steps, we will take only the top 50 songs of each year of each dataset.
+
+I have downloaded the two datasets from Kaggle, they are publicly available datasets with the links as follows:
+
+[Click here for the link to the 2023 Spotify Dataset](https://www.kaggle.com/datasets/nelgiriyewithana/top-spotify-songs-2023)
+
+[Click here for the link to the 2024 Spotify Dataset](https://www.kaggle.com/datasets/nelgiriyewithana/most-streamed-spotify-songs-2024?resource=download)
+
+
+I have uploaded the csv files on the 'Final Project' Git repository, and pulled the files onto my local workspace.
+
 
 #### Data Wrangling 
 
 Include R code and written explanation for wangling your data (you can make multiple wrangled data sets). 
+
+```{r}
+data2023 <- read.csv("spotify-2023.csv")
+head(data1)
+```
+This is the head of the 2023 Spotify Most Streamed Charts.
+
+```{r}
+data2024 <- read.csv("Most Streamed Spotify Songs 2024.csv")
+head(data2024)
+```
+This is the head of the Spotify 2024 most streamed charts.
+
+
+Next, it is important for us to use some kind of imputational model normally with regards to data cleaning for handling of missing values. I am not too familiar with the use of imputational models on R, instead, since the datasets are so vast, we can find rows with missing values for each data set and remove them from our data-sets. 
+
+```{r}
+sum(is.na(data2023)) # Checking for rows with missing values in 2023 Spotify Dataset 
+```
+As it turns out there are no missing values in this data-set, but for the sake of safety, we can remove any if at all:
+```{r}
+data2023 <- na.omit(data2023)
+sum(is.na(data2023))
+```
+For data cleaning, it is important to note that while this is not the case for 2023, in 2024 a lot of variables are in string format, we will change them to numerical values accordingly for better help with regards to visualization:
+
+```{r}
+data2024 <- data2024 %>%
+  mutate(
+    Spotify.Streams = as.numeric(gsub(",", "", Spotify.Streams)),
+    Spotify.Playlist.Count = as.numeric(gsub(",", "", Spotify.Playlist.Count)),
+    Spotify.Playlist.Reach = as.numeric(gsub(",", "", Spotify.Playlist.Reach)),
+    YouTube.Views = as.numeric(gsub(",", "", YouTube.Views)),
+    YouTube.Likes = as.numeric(gsub(",", "", YouTube.Likes)),
+    TikTok.Posts = as.numeric(gsub(",", "", TikTok.Posts)),
+    TikTok.Likes = as.numeric(gsub(",", "", TikTok.Likes)),
+    TikTok.Views = as.numeric(gsub(",", "", TikTok.Views)),
+    YouTube.Playlist.Reach = as.numeric(gsub(",", "", YouTube.Playlist.Reach)),
+    Apple.Music.Playlist.Count = as.numeric(Apple.Music.Playlist.Count),
+    Deezer.Playlist.Count = as.numeric(Deezer.Playlist.Count),
+    Deezer.Playlist.Reach = as.numeric(gsub(",", "", Deezer.Playlist.Reach)),
+    Amazon.Playlist.Count = as.numeric(Amazon.Playlist.Count),
+    Pandora.Streams = as.numeric(gsub(",", "", Pandora.Streams)),
+    Pandora.Track.Stations = as.numeric(gsub(",", "", Pandora.Track.Stations)),
+    Soundcloud.Streams = as.numeric(gsub(",", "", Soundcloud.Streams)),
+    Shazam.Counts = as.numeric(gsub(",", "", Shazam.Counts))
+  )
+```
+
+
+We can now perform the same check for the 2024 Data-set.
+
+```{r}
+sum(is.na(data2024)) # Checking for rows with missing values in 2024 Spotify Dataset 
+```
+There seem to be 25759 rows with missing information. This is expected since it is a much larger dataset than that of the 2023. We must now fill in these rows and check again:
+
+```{r}
+library(tidyverse)
+data2024[is.na(data2024)] <- 0
+sum(is.na(data2024))
+```
+Instead of ommitting these rows since a very large number of observations seem to be left out, we have just replaced the N/A's with a value of 0 thus retaining the dataset, since no observation was left if we tried to omit all rows with missing values. Another imputational model could have been employed by calculating the mean or median of columns but for the sake of simplicity, I assigned 0.
+
+
+Let us continue with the data wrangling methods now that we have gotten a better understanding of our dataset.
+
+
+For the first part of our objective, we need to find the top 5 songs appearing the most in spotify playlists in 2023 and 2024 respectively:
+
+
+* In 2023:
+
+```{r}
+top5_2023 <- data2023 %>%
+  arrange(desc(in_spotify_playlists)) %>%
+  slice_head(n = 5)
+
+top5_2023
+```
+
+* In 2024:
+
+```{r}
+top5_2024 <- data2024 %>%
+  arrange(desc(Spotify.Playlist.Count)) %>%
+  slice_head(n = 5)
+
+top5_2024
+```
+
+
+
 
 
 
