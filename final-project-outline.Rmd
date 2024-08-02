@@ -39,6 +39,7 @@ I have uploaded the csv files on the 'Final Project' Git repository, and pulled 
 Include R code and written explanation for wangling your data (you can make multiple wrangled data sets). 
 
 ```{r}
+library(tidyverse)
 data2023 <- read.csv("spotify-2023.csv")
 head(data1)
 ```
@@ -128,19 +129,104 @@ top5_2024 <- data2024 %>%
 top5_2024
 ```
 
+Computing Correlation between bpm and popularity(2023:
 
 
+```{r}
+non_numeric_streams <- data2023 %>%
+  filter(!is.na(streams) & !grepl("^\\d+$", gsub(",", "", streams)))
 
+data2023_cleaned <- data2023 %>%
+  mutate(
+    bpm = as.numeric(bpm),
+    streams = as.numeric(gsub(",", "", streams))
+  ) %>%
+  filter(!is.na(bpm) & !is.na(streams))
 
+mean_bpm_2023 <- mean(data2023_cleaned$bpm)
+mean_streams_2023 <- mean(data2023_cleaned$streams)
+cov_2023 <- mean((data2023_cleaned$bpm - mean_bpm_2023) * (data2023_cleaned$streams - mean_streams_2023))
+sd_bpm_2023 <- sd(data2023_cleaned$bpm)
+sd_streams_2023 <- sd(data2023_cleaned$streams)
+correlation_bpm_streams_2023 <- cov_2023 / (sd_bpm_2023 * sd_streams_2023)
+
+print(paste("Pearson correlation for 2023:", correlation_bpm_streams_2023))
+
+```
+Therefore, we can see the pearson correlation coeff is -0.002. 
 
 
 ## Data Visualization
 
-Include R code and written explanation for your data visualization(s) with at least 3 variables. You must have **at least** one graph. You may have more than one (I would encourage you to have more than one). 
+Now, we have to visualize the Data we have wrangled.
 
+Top 5 most popular playlist songs in 2023 and 2024:
+
+
+In 2023, the 5 most popular songs in playlists were:
+
+```{r}
+library(ggplot2)
+
+ggplot(top5_2023, aes(x = track_name, y = in_spotify_playlists)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  coord_flip() +
+  labs(title = "Top 5 Songs in Spotify Playlists (2023)",
+       x = "Track Name",
+       y = "Number of Playlists") +
+  theme_minimal()
+
+```
+In 2024, the 5 most popular songs in playlists were:
+
+```{r}
+ggplot(top5_2024, aes(x = Track, y = Spotify.Playlist.Count)) +
+  geom_bar(stat = "identity", fill = "green") +
+  coord_flip() +
+  labs(title = "Top 5 Songs in Spotify Playlists (2024)",
+       x = "Track Name",
+       y = "Number of Playlists") +
+  theme_minimal()
+```
+
+
+Visualization for correlation between bpm and popularity in 2023:
+
+```{r}
+ggplot(data2023_cleaned, aes(x = bpm, y = streams)) +
+  geom_point(color = "blue") +
+  geom_line(color = "green") +
+  labs(title = "BPM vs. Streams (2023)",
+       x = "BPM",
+       y = "Streams") +
+  theme_minimal()
+```
 
 
 
 ## Conclusion
 
-Answer your research question using the data sets and visualizations you created. 
+The 5 most popular songs in the 2023 playlist were(in increasing order of playlist presence):
+
+i) Take on me
+ii) Smells Like Teen Spirit - Remastered 2021
+iii) Wake Me Up - Radio Edit
+iv) Mr. Brightside
+v) Get Lucky - Radio Edit
+
+The 5 most popular songs in the 2024 playlist were(in increasing order of playlist presence):
+
+i) Smells Like Teen Spirit
+ii) Sweater Weather
+iii) STAY(with Justin Bieber)
+iv) Heat Waves
+v) Blinding Lights
+
+
+With regards to the BPM Vs Streams Correlation: 
+
+There seems to be a slightly negative correlation between BPM and Popularity of Songs, and the graph reflects that there is no correlation that proves that the higher the BPM of a song.
+
+
+
+
