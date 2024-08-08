@@ -38,10 +38,17 @@ I have uploaded the csv files on the 'Final Project' Git repository, and pulled 
 
 #### Data Wrangling 
 
-Include R code and written explanation for wangling your data (you can make multiple wrangled data sets). 
+Here are the libraries we need to use:
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
+```
+
+
+
+
+```{r}
 data2023 <- read.csv("spotify-2023.csv")
 head(data1)
 ```
@@ -98,7 +105,6 @@ sum(is.na(data2024)) # Checking for rows with missing values in 2024 Spotify Dat
 There seem to be 25759 rows with missing information. This is expected since it is a much larger dataset than that of the 2023. We must now fill in these rows and check again:
 
 ```{r}
-library(tidyverse)
 data2024[is.na(data2024)] <- 0
 sum(is.na(data2024))
 ```
@@ -168,7 +174,6 @@ Top 5 most popular playlist songs in 2023 and 2024:
 In 2023, the 5 most popular songs in playlists were:
 
 ```{r}
-library(ggplot2)
 
 ggplot(top5_2023, aes(x = track_name, y = in_spotify_playlists)) +
   geom_bar(stat = "identity", fill = "blue") +
@@ -203,12 +208,67 @@ ggplot(data2023_cleaned, aes(x = bpm, y = streams)) +
        y = "Streams") +
   theme_minimal()
 ```
+The Final Visualization revolves around streams across platforms, we are going to arrange the data and visualize it accordingly.
+```{r}
+top50_2023 <- data2023 %>%
+  arrange(desc(in_spotify_playlists)) %>%
+  head(50)
+
+top50_2024 <- data2024 %>%
+  arrange(desc(Spotify.Playlist.Count)) %>%
+  head(50)
+
+top50_2023_cleaned <- top50_2023 %>%
+  rename(
+    Spotify_Playlists = in_spotify_playlists,
+    Apple_Music_Playlists = in_apple_playlists,
+    Deezer_Playlists = in_deezer_playlists
+  )
+
+top50_2024_cleaned <- top50_2024 %>%
+  rename(
+    Spotify_Playlists = Spotify.Playlist.Count,
+    Apple_Music_Playlists = Apple.Music.Playlist.Count,
+    Deezer_Playlists = Deezer.Playlist.Count
+  )
+
+summary_2023 <- top50_2023_cleaned %>%
+  summarise(
+    Avg_Spotify_Playlists = mean(Spotify_Playlists, na.rm = TRUE),
+    Avg_Apple_Music_Playlists = mean(Apple_Music_Playlists, na.rm = TRUE),
+    Avg_Deezer_Playlists = mean(as.numeric(Deezer_Playlists), na.rm = TRUE)
+  )
+
+summary_2024 <- top50_2024_cleaned %>%
+  summarise(
+    Avg_Spotify_Playlists = mean(Spotify_Playlists, na.rm = TRUE),
+    Avg_Apple_Music_Playlists = mean(Apple_Music_Playlists, na.rm = TRUE),
+    Avg_Deezer_Playlists = mean(Deezer_Playlists, na.rm = TRUE)
+  )
+
+comparison_data <- bind_rows(
+  data.frame(Year = "2023", Platform = "Spotify", Streams = summary_2023$Avg_Spotify_Playlists),
+  data.frame(Year = "2023", Platform = "Apple Music", Streams = summary_2023$Avg_Apple_Music_Playlists),
+  data.frame(Year = "2023", Platform = "Deezer", Streams = summary_2023$Avg_Deezer_Playlists),
+  data.frame(Year = "2024", Platform = "Spotify", Streams = summary_2024$Avg_Spotify_Playlists),
+  data.frame(Year = "2024", Platform = "Apple Music", Streams = summary_2024$Avg_Apple_Music_Playlists),
+  data.frame(Year = "2024", Platform = "Deezer", Streams = summary_2024$Avg_Deezer_Playlists)
+)
+
+ggplot(comparison_data, aes(x = Platform, y = Streams, fill = Year)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Playlist Counts for Top 50 Songs by Platform for 2023 and 2024", 
+       x = "Platform", 
+       y = "Average Playlist Count") +
+  theme_minimal()
+```
+
 
 
 
 ## Conclusion
 
-The 5 most popular songs in the 2023 playlist were(in increasing order of playlist presence):
+1. The 5 most popular songs in the 2023 playlist were(in increasing order of playlist presence):
 
 i) Take on me
 ii) Smells Like Teen Spirit - Remastered 2021
@@ -225,10 +285,19 @@ iv) Heat Waves
 v) Blinding Lights
 
 
-With regards to the BPM Vs Streams Correlation: 
+2. With regards to the BPM Vs Streams Correlation: 
 
 There seems to be a slightly negative correlation between BPM and Popularity of Songs, and the graph reflects that there is no correlation that proves that the higher the BPM of a song.
 
 
+3. With regards to streams across platforms for the top 50 songs of 2023 and 2024, there is no surprise that Spotify has the vast majority of playlist utilizers. The top 50 songs in 2024 appear on playlists much more than the top 50 songs of 2023. 
+
+In addition to this, another point to note which was quite surprising is the fact that Deezer has more playlist users for top 50 songs than Apple Music in 2023. Apple Music managed to slightly exceed Deezer in 2024 however.
+
+Listed below in tabular format are the numbers:
+
+```{r}
+comparison_data
+```
 
 
